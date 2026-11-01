@@ -1,34 +1,87 @@
 .sources {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
+    max-width: 100%;
     height: 120px;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     align-items: center;
-    font: 300 1em 'Fira Sans', sans-serif;
+    padding: 0 12px;
+    background: rgba(23, 24, 28, 0.96);
+    border-bottom: 1px solid rgba(146, 166, 198, 0.14);
+    backdrop-filter: blur(12px);
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+    font: 400 1rem 'Fira Sans', sans-serif;
 }
 
 .source__item {
-    background: none;
-    border: 2px solid #30c5ff;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border: 1px solid rgba(146, 166, 198, 0.32);
+    border-radius: 999px;
+    background: #222631;
     font: inherit;
     line-height: 1;
     margin: 0.5em;
-    padding: 1em 2em;
-    color: #70d6ff;
-    transition: 0.25s;
+    padding: 0.8em 1.25em;
+    color: #d8e0ef;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     cursor: pointer;
 }
 
-.source__item:hover,
-.source__item:focus {
-    border-color: #3fcc59;
-    color: #69db7e;
-    box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
-    transform: translateY(-0.25em);
+.source__item:hover {
+    border-color: #66c8ff;
+    background: #2a3546;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.source__item:focus-visible {
+    outline: 3px solid #84d5ff;
+    outline-offset: 3px;
+}
+
+.source__item.is-active {
+    border-color: #69c7ff;
+    background: linear-gradient(135deg, #287fc1, #4052a5);
+    color: #fff;
+    box-shadow: 0 5px 18px rgba(40, 127, 193, 0.28);
 }
 
 .source__item-name {
     font-weight: 400;
     white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .sources {
+        height: 96px;
+        padding: 0 8px;
+    }
+
+    .source__item {
+        margin: 0.375em;
+        padding: 0.75em 1.1em;
+        font-size: 0.9rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .source__item {
+        transition: none;
+    }
 }
