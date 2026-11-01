@@ -73,7 +73,9 @@ main {
 }
 
 @keyframes status-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -87,21 +89,57 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 16px;
+    padding: 18px 16px;
+    border-top: 1px solid rgba(146, 166, 198, 0.14);
+    background: #14161a;
 }
+
+footer .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    width: min(100%, 1600px);
+}
+
 footer .copyright {
-    font-size: 14px;
-    color: #333;
+    margin: 0;
+    font-size: 13px;
+    color: #aeb8c9;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 footer .copyright a {
-    color: #444;
+    color: #84d5ff;
 }
 footer .copyright a:hover {
-    color: #555;
+    color: #b0e7ff;
 }
-footer .copyright:before {
-    content: '©';
+
+footer .footer-divider {
+    color: #667085;
+}
+
+footer .course-link {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+footer .course-link:hover,
+footer .course-link:focus-visible {
+    opacity: 1;
+}
+
+footer .course-link img {
+    display: block;
+    width: 40px;
+    height: auto;
 }
 
 @media (max-width: 480px) {
@@ -117,6 +155,15 @@ footer .copyright:before {
 
     .app-status {
         width: calc(100% - 24px);
+    }
+
+    footer .footer-content {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    footer .copyright {
+        justify-content: center;
     }
 }
 
