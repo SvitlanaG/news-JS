@@ -1,6 +1,9 @@
 import './sources.css';
 
-interface Source { id: string; name: string }
+interface Source {
+    id: string;
+    name: string;
+}
 
 class Sources {
     draw(data: Source[]): void {

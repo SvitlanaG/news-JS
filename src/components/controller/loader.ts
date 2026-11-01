@@ -14,7 +14,7 @@ class Loader {
 
     getResp(
         { endpoint, options = {} }: RequestOptions,
-        callback: (data: any) => void = () => {
+        callback: (data: unknown) => void = () => {
             console.error('No callback for GET response');
         }
     ) {
@@ -42,7 +42,12 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: (data: any) => void, options: Record<string, string> = {}): void {
+    load(
+        method: string,
+        endpoint: string,
+        callback: (data: unknown) => void,
+        options: Record<string, string> = {}
+    ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())

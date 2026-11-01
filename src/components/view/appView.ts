@@ -1,9 +1,16 @@
 import News from './news/news';
 import Sources from './sources/sources';
 
-interface SourcesResponse { sources?: Source[] }
-interface NewsResponse { articles?: Article[] }
-interface Source { id: string; name: string }
+interface SourcesResponse {
+    sources?: Source[];
+}
+interface NewsResponse {
+    articles?: Article[];
+}
+interface Source {
+    id: string;
+    name: string;
+}
 interface Article {
     author: string | null;
     source: { name: string };
@@ -23,13 +30,15 @@ export class AppView {
         this.sources = new Sources();
     }
 
-    drawNews(data: NewsResponse): void {
-        const values = data?.articles ? data?.articles : [];
+    drawNews(data: unknown): void {
+        const response = data as NewsResponse | null;
+        const values = response?.articles ?? [];
         this.news.draw(values);
     }
 
-    drawSources(data: SourcesResponse): void {
-        const values = data?.sources ? data?.sources : [];
+    drawSources(data: unknown): void {
+        const response = data as SourcesResponse | null;
+        const values = response?.sources ?? [];
         this.sources.draw(values);
     }
 }
