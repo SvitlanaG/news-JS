@@ -1,4 +1,5 @@
 import Loader from './loader';
+import { RequestLifecycle } from './loader';
 import { NewsApiQuery } from '../../types/newsApi';
 
 class AppLoader extends Loader {
@@ -13,9 +14,10 @@ class AppLoader extends Loader {
 
     public getResp<T>(
         { endpoint, options = {} }: Readonly<{ endpoint: string; options?: NewsApiQuery }>,
-        callback?: (data: T) => void
+        callback?: (data: T) => void,
+        lifecycle: RequestLifecycle = {}
     ): void {
-        super.getResp({ endpoint: this.useMocks ? `mocks/${endpoint}` : endpoint, options }, callback);
+        super.getResp({ endpoint: this.useMocks ? `mocks/${endpoint}` : endpoint, options }, callback, lifecycle);
     }
 }
 

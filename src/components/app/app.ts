@@ -13,8 +13,16 @@ class App {
     public start(): void {
         const sources = document.querySelector<HTMLElement>('.sources');
         if (!sources) return;
-        sources.addEventListener('click', (e) => this.controller.getNews(e, (data) => this.view.drawNews(data)));
-        this.controller.getSources((data) => this.view.drawSources(data));
+        sources.addEventListener('click', (e) =>
+            this.controller.getNews(e, (data) => this.view.drawNews(data), {
+                onStart: () => this.view.showLoading('Loading articles…'),
+                onError: (error) => this.view.showError(error.message),
+            })
+        );
+        this.controller.getSources((data) => this.view.drawSources(data), {
+            onStart: () => this.view.showLoading('Loading news sources…'),
+            onError: (error) => this.view.showError(error.message),
+        });
     }
 }
 

@@ -5,6 +5,11 @@ interface RequestOptions {
     options?: NewsApiQuery;
 }
 
+export interface RequestLifecycle {
+    onStart?: () => void;
+    onError?: (error: Error) => void;
+}
+
 class Loader {
     private baseLink: string;
     private options: NewsApiQuery;
@@ -18,9 +23,11 @@ class Loader {
         { endpoint, options = {} }: Readonly<RequestOptions>,
         callback: (data: T) => void = () => {
             console.error('No callback for GET response');
-        }
+        },
+        lifecycle: RequestLifecycle = {}
     ): void {
-        this.load('GET', endpoint, callback, options);
+        lifecycle.onStart?.();
+        this.load('GET', endpoint, callback, options, lifecycle.onError);
     }
 
     public errorHandler(res: Response): Response {
@@ -44,12 +51,22 @@ class Loader {
         return `${this.baseLink}${endpoint}?${searchParams.toString()}`;
     }
 
-    public load<T>(method: string, endpoint: string, callback: (data: T) => void, options: NewsApiQuery = {}): void {
+    public load<T>(
+        method: string,
+        endpoint: string,
+        callback: (data: T) => void,
+        options: NewsApiQuery = {},
+        onError?: (error: Error) => void
+    ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json() as Promise<T>)
             .then((data) => callback(data))
-            .catch((err) => console.error(err));
+            .catch((error: unknown) => {
+                const requestError = error instanceof Error ? error : new Error('The request failed.');
+                if (onError) onError(requestError);
+                else console.error(requestError);
+            });
     }
 }
 

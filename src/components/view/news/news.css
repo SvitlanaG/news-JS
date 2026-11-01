@@ -54,6 +54,9 @@
 }
 
 .news__item .news__description {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     padding: 1rem;
     background: #fff;
     position: relative;
@@ -118,6 +121,11 @@
     width: 35px;
     top: -0.75rem;
     border-radius: 3px;
+}
+
+.news__item .news__description .news__read-more {
+    margin-top: auto;
+    padding-top: 1rem;
 }
 
 .news__item:hover .news__meta-details {

@@ -12,7 +12,9 @@ class Sources {
             const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
             sourceClone.querySelector<HTMLElement>('.source__item-name')!.textContent = item.name;
-            sourceClone.querySelector<HTMLElement>('.source__item')!.setAttribute('data-source-id', item.id || '');
+            sourceClone
+                .querySelector<HTMLButtonElement>('.source__item')!
+                .setAttribute('data-source-id', item.id || '');
 
             fragment.append(sourceClone);
         });
