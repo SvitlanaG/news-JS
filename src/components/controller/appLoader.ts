@@ -10,9 +10,9 @@ class AppLoader extends Loader {
 
     private useMocks: boolean;
 
-    getResp(
+    getResp<T>(
         { endpoint, options = {} }: { endpoint: string; options?: Record<string, string> },
-        callback?: (data: unknown) => void
+        callback?: (data: T) => void
     ): void {
         super.getResp({ endpoint: this.useMocks ? `mocks/${endpoint}` : endpoint, options }, callback);
     }

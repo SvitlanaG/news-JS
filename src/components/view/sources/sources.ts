@@ -1,12 +1,8 @@
 import './sources.css';
-
-interface Source {
-    id: string;
-    name: string;
-}
+import { NewsApiSource } from '../../../types/newsApi';
 
 class Sources {
-    draw(data: Source[]): void {
+    draw(data: NewsApiSource[]): void {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
         const sourcesContainer = document.querySelector<HTMLElement>('.sources');
@@ -16,7 +12,7 @@ class Sources {
             const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
             sourceClone.querySelector<HTMLElement>('.source__item-name')!.textContent = item.name;
-            sourceClone.querySelector<HTMLElement>('.source__item')!.setAttribute('data-source-id', item.id);
+            sourceClone.querySelector<HTMLElement>('.source__item')!.setAttribute('data-source-id', item.id || '');
 
             fragment.append(sourceClone);
         });

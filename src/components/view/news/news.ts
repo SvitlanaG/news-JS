@@ -1,17 +1,8 @@
 import './news.css';
-
-interface Article {
-    author: string | null;
-    source: { name: string };
-    publishedAt: string;
-    urlToImage: string | null;
-    title: string;
-    description: string;
-    url: string;
-}
+import { NewsApiArticle } from '../../../types/newsApi';
 
 class News {
-    draw(data: Article[]): void {
+    draw(data: NewsApiArticle[]): void {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
@@ -36,7 +27,7 @@ class News {
 
             newsClone.querySelector<HTMLElement>('.news__description-title')!.textContent = item.title;
             newsClone.querySelector<HTMLElement>('.news__description-source')!.textContent = item.source.name;
-            newsClone.querySelector<HTMLElement>('.news__description-content')!.textContent = item.description;
+            newsClone.querySelector<HTMLElement>('.news__description-content')!.textContent = item.description || '';
             newsClone.querySelector<HTMLAnchorElement>('.news__read-more a')!.setAttribute('href', item.url);
 
             fragment.append(newsClone);

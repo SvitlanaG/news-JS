@@ -1,25 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-
-interface SourcesResponse {
-    sources?: Source[];
-}
-interface NewsResponse {
-    articles?: Article[];
-}
-interface Source {
-    id: string;
-    name: string;
-}
-interface Article {
-    author: string | null;
-    source: { name: string };
-    publishedAt: string;
-    urlToImage: string | null;
-    title: string;
-    description: string;
-    url: string;
-}
+import { NewsApiArticlesResponse, NewsApiSourcesResponse } from '../../types/newsApi';
 
 export class AppView {
     private news: News;
@@ -30,14 +11,12 @@ export class AppView {
         this.sources = new Sources();
     }
 
-    drawNews(data: unknown): void {
-        const response = data as NewsResponse | null;
+    drawNews(response: NewsApiArticlesResponse): void {
         const values = response?.articles ?? [];
         this.news.draw(values);
     }
 
-    drawSources(data: unknown): void {
-        const response = data as SourcesResponse | null;
+    drawSources(response: NewsApiSourcesResponse): void {
         const values = response?.sources ?? [];
         this.sources.draw(values);
     }
