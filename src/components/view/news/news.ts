@@ -2,7 +2,7 @@ import './news.css';
 import { NewsApiArticle } from '../../../types/newsApi';
 
 class News {
-    draw(data: NewsApiArticle[]): void {
+    public draw(data: ReadonlyArray<Readonly<NewsApiArticle>>): void {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();

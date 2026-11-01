@@ -1,4 +1,5 @@
 import Loader from './loader';
+import { NewsApiQuery } from '../../types/newsApi';
 
 class AppLoader extends Loader {
     constructor() {
@@ -10,8 +11,8 @@ class AppLoader extends Loader {
 
     private useMocks: boolean;
 
-    getResp<T>(
-        { endpoint, options = {} }: { endpoint: string; options?: Record<string, string> },
+    public getResp<T>(
+        { endpoint, options = {} }: Readonly<{ endpoint: string; options?: NewsApiQuery }>,
         callback?: (data: T) => void
     ): void {
         super.getResp({ endpoint: this.useMocks ? `mocks/${endpoint}` : endpoint, options }, callback);

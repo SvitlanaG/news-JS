@@ -1,8 +1,8 @@
 import './sources.css';
-import { NewsApiSource } from '../../../types/newsApi';
+import { ReadonlyNewsApiSource } from '../../../types/newsApi';
 
 class Sources {
-    draw(data: NewsApiSource[]): void {
+    public draw(data: ReadonlyArray<ReadonlyNewsApiSource>): void {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
         const sourcesContainer = document.querySelector<HTMLElement>('.sources');

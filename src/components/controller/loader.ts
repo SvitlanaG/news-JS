@@ -1,27 +1,29 @@
+import { NewsApiQuery } from '../../types/newsApi';
+
 interface RequestOptions {
     endpoint: string;
-    options?: Record<string, string>;
+    options?: NewsApiQuery;
 }
 
 class Loader {
     private baseLink: string;
-    private options: Record<string, string>;
+    private options: NewsApiQuery;
 
-    constructor(baseLink: string, options: Record<string, string>) {
+    constructor(baseLink: string, options: NewsApiQuery) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
-    getResp<T>(
-        { endpoint, options = {} }: RequestOptions,
+    public getResp<T>(
+        { endpoint, options = {} }: Readonly<RequestOptions>,
         callback: (data: T) => void = () => {
             console.error('No callback for GET response');
         }
-    ) {
+    ): void {
         this.load('GET', endpoint, callback, options);
     }
 
-    errorHandler(res: Response): Response {
+    public errorHandler(res: Response): Response {
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
@@ -31,18 +33,18 @@ class Loader {
         return res;
     }
 
-    makeUrl(options: Record<string, string>, endpoint: string): string {
+    public makeUrl(options: NewsApiQuery, endpoint: string): string {
         const urlOptions = { ...this.options, ...options };
-        let url = `${this.baseLink}${endpoint}?`;
+        const searchParams = new URLSearchParams();
 
-        Object.keys(urlOptions).forEach((key) => {
-            url += `${key}=${urlOptions[key]}&`;
+        Object.entries(urlOptions).forEach(([key, value]) => {
+            if (value) searchParams.set(key, value);
         });
 
-        return url.slice(0, -1);
+        return `${this.baseLink}${endpoint}?${searchParams.toString()}`;
     }
 
-    load<T>(method: string, endpoint: string, callback: (data: T) => void, options: Record<string, string> = {}): void {
+    public load<T>(method: string, endpoint: string, callback: (data: T) => void, options: NewsApiQuery = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json() as Promise<T>)
